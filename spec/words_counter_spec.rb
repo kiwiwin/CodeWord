@@ -45,4 +45,11 @@ describe WordsCounter do
     it "test word a appear 3 times" do
         WordsCounter.new(['a','a','a']).words_count.should == { 'a' => 3 }
     end
+    
+    it "merge another WordsCounter" do
+        counter1 = WordsCounter.new ['a', 'b']
+        counter2 = WordsCounter.new ['b', 'c']
+        counter1.merge(counter2)
+        counter1.words_count.should == { 'a' => 1, 'b' => 2, 'c' => 1 }
+    end
 end

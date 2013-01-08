@@ -12,6 +12,10 @@ class WordsCounter
         new_words.each { |word| @words_count[word] += 1 }
     end
     
+    def merge(counter)
+        @words_count.merge!(counter.words_count) { |key, old_val, new_val| old_val + new_val }
+    end
+    
     class << self
         def split_words(str)
             composite_words = str.scan(/\w+/).flatten
