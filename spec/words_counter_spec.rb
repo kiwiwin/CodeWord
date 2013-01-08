@@ -35,15 +35,13 @@ describe WordsCounter do
     
     it "test hello world cpp" do
         expected = ['include', 'iostream', 'using', 'namespace', 'int', 'main', 'cout', 'hello', 'world', 'endl']
-        file_content = open(fixture("hello_world.cpp")).read
-        WordsCounter.split_words(file_content).should == expected
+        WordsCounter.split_words(fixture_content("hello_world.cpp")).should == expected
     end
     
     it "test hello world java" do
         expected = ['public', 'class', 'hello', 'world', 'public', 'static', 'void', 'main', 'string', 
         'args', 'system', 'out', 'println', 'hello', 'world']
-        file_content = open(fixture("hello_world.java")).read
-        WordsCounter.split_words(file_content).should == expected
+        WordsCounter.split_words(fixture_content("hello_world.java")).should == expected
     end
     
     it "test word count each word appear only once" do
