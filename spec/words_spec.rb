@@ -21,8 +21,18 @@ describe Words do
         Words.new("String.new").to_a.should == ['string', 'new']
     end
     
+    it "should recognize abbreviation" do
+        Words.new("HttpXMLRequest").to_a.should == ['http', 'xml', 'request']
+    end
+    
     it "test hello world cpp" do
         expected = ['include', 'iostream', 'using', 'namespace', 'int', 'main', 'cout', 'hello', 'world', 'endl']
-        Words.new(open(fixture("hello_word.cpp")).read).to_a.should == expected
+        Words.new(open(fixture("hello_world.cpp")).read).to_a.should == expected
+    end
+    
+    it "test hello world java" do
+        expected = ['public', 'class', 'hello', 'world', 'public', 'static', 'void', 'main', 'string', 
+        'args', 'system', 'out', 'println', 'hello', 'world']
+        Words.new(open(fixture("hello_world.java")).read).to_a.should == expected
     end
 end

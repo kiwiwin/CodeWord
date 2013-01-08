@@ -1,16 +1,17 @@
+require 'active_support/inflector'
+
 class Words
     def initialize(str)
         @str = str
     end
     
     def to_a
-        words = @str.unCamel.flatten
-        words.collect { |word| word.downcase }
+        split_words
     end
-end
-
-class String
-    def unCamel
-        scan(/([A-Za-z][a-z]*)/)
+    
+    def split_words
+        composite_words = @str.scan(/\w+/).flatten
+        words = composite_words.collect  { |cword| cword.underscore.split('_') }.flatten
+        words.collect { |word| word.downcase }
     end
 end
