@@ -1,6 +1,10 @@
 require_relative 'spec_helper'
 
 describe WordsCounter do
+    it "should return empty when input is empty" do
+        WordsCounter.split_words("").should be_empty
+    end
+
     it "should return WordsCounter split by space" do
         WordsCounter.split_words("a b c").should == ['a', 'b', 'c']
     end
@@ -23,6 +27,10 @@ describe WordsCounter do
     
     it "should recognize abbreviation" do
         WordsCounter.split_words("HttpXMLRequest").should == ['http', 'xml', 'request']
+    end
+    
+    it "should ignore continue _ " do
+        WordsCounter.split_words("__FILE__").should == ['file']
     end
     
     it "test hello world cpp" do
@@ -51,5 +59,15 @@ describe WordsCounter do
         counter2 = WordsCounter.new ['b', 'c']
         counter1.merge(counter2)
         counter1.words_count.should == { 'a' => 1, 'b' => 2, 'c' => 1 }
+    end
+    
+    it "ranked order" do
+        counter = WordsCounter.new ['a','b','c','b']
+        counter.rank.should == [['b', 2], ['a', 1], ['c', 1]]
+    end
+    
+    it "count words under speicific directory" do
+        counter = WordsCounter.create_by_dir(fixture_path + "/txt/**/*.txt")
+        counter.words_count.should == { 'a' => 1, 'b' => 2, 'c' => 1}
     end
 end
