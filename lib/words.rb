@@ -14,4 +14,10 @@ class Words
         words = composite_words.collect  { |cword| cword.underscore.split('_') }.flatten
         words.collect { |word| word.downcase }
     end
+    
+    def count
+        res = Hash.new(0)
+        split_words.each { |word| res[word] += 1 }
+        res
+    end
 end

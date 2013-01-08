@@ -35,4 +35,12 @@ describe Words do
         'args', 'system', 'out', 'println', 'hello', 'world']
         Words.new(open(fixture("hello_world.java")).read).to_a.should == expected
     end
+    
+    it "test word count each word appear only once" do
+        Words.new("a b c").count.should == { 'a' => 1, 'b' => 1, 'c' => 1}
+    end
+    
+    it "test word a appear 3 times" do
+        Words.new("a a a").count.should == { 'a' => 3 }
+    end
 end
