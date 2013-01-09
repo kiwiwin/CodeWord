@@ -10,7 +10,7 @@ describe TFIDF do
     end
     
     it "should return terms_weight" do
-        @tfidf.terms_weight.should == { 'b' => 0.0, 'a' => 0.5, 'c' => 0.5}
+        @tfidf.words_weight.should == { 'b' => 0.0, 'a' => 0.5, 'c' => 0.5}
     end
     
     it "should return vsm" do

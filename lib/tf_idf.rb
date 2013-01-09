@@ -26,12 +26,12 @@ class TFIDF
     end
         
     def word_selection(limit = 10)
-        result = terms_weight.sort_dec
+        result = words_weight.sort_dec
         last = [limit, result.size].min
         result[0...last].collect { |word, w| word }
     end
     
-    def terms_weight
+    def words_weight
         result = Hash.new(0.0)
         total_counter.words.each { |word| result[word] = tfidf(total_counter, word) }
         result
