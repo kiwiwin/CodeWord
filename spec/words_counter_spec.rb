@@ -55,7 +55,7 @@ describe WordsCounter do
     it "merge another WordsCounter" do
         counter1 = WordsCounter.new ['a', 'b']
         counter2 = WordsCounter.new ['b', 'c']
-        counter1.merge(counter2)
+        counter1.merge!(counter2)
         counter1.words_count.should == { 'a' => 1, 'b' => 2, 'c' => 1 }
     end
     

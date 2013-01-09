@@ -1,4 +1,5 @@
 require 'active_support/inflector'
+require_relative 'hash_ext'
 
 class WordsCounter
     attr_reader :words_count
@@ -12,12 +13,36 @@ class WordsCounter
         new_words.each { |word| @words_count[word] += 1 }
     end
     
-    def merge(counter)
+    def merge!(counter)
         @words_count.merge!(counter.words_count) { |key, old_val, new_val| old_val + new_val }
     end
     
     def rank
-        @words_count.sort { |lhs, rhs| rhs[1] <=> lhs[1] }
+        @words_count.sort_dec
+    end
+    
+    def words_rank
+        rank.collect { |word, count| word }
+    end
+    
+    def count_rank
+        rank.collect { |word, count| count }
+    end
+    
+    def count(word)
+        @words_count[word]
+    end
+    
+    def max_count
+        count_rank[0]
+    end
+    
+    def words
+        @words_count.keys
+    end
+    
+    def has_word?(word)
+        @words_count.has_key?(word)
     end
     
     class << self
@@ -35,10 +60,18 @@ class WordsCounter
             create(open(filename).read)
         end
         
+        def create_hash_by_dir(pattern)
+            result = Hash.new
+            Dir[pattern].each do |file|
+                result[file] = WordsCounter.create_by_file(file)
+            end
+            result
+        end
+        
         def create_by_dir(pattern)
             result = WordsCounter.new
             Dir[pattern].each do |file|
-                result.merge(create_by_file(file))
+                result.merge!(create_by_file(file))
             end
             result
         end
