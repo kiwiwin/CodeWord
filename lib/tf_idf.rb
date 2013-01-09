@@ -18,9 +18,7 @@ class TFIDF
     end
     
     def word_vector(counter, words)
-        words.collect do |word|
-            tf(counter, word) * idf(word)
-        end
+        words.collect { |word| tfidf(counter, word) }
     end
     
     def tf(counter, word)
@@ -35,12 +33,12 @@ class TFIDF
     
     def terms_weight
         result = Hash.new(0.0)
-        total_counter.words.each { |word| result[word] = tfidf(word) }
+        total_counter.words.each { |word| result[word] = tfidf(total_counter, word) }
         result
     end
     
-    def tfidf(word)
-        tf(total_counter, word) * idf(word)
+    def tfidf(counter, word)
+        tf(counter, word) * idf(word)
     end
         
     def idf(word)
